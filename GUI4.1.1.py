@@ -365,7 +365,7 @@ class Ui_MainWindow(object):
         soba_unsc = sc_soba.inverse_transform(predictie_soba)
         self.tempsoba.setText(str(soba_unsc))
                 
-        pickle_scor = open('try4.1\\li_forest.pickle', 'rb')
+        pickle_scor = open('li_forest.pickle', 'rb')
         bacon_scor = pickle.load(pickle_scor)
         a,b,c,d,e,f = bacon_scor
         self.scoraer.setText(str(a))
