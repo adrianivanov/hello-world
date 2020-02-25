@@ -132,6 +132,10 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
+        self.dialog = QtWidgets.QLabel(self.centralwidget)
+        self.dialog.setGeometry(QtCore.QRect(100, 360, 191, 91))
+        self.dialog.setObjectName("dialog")
+
         self.calculeaza.clicked.connect(self.pressed_neural)
         self.button_linear.clicked.connect(self.pressed_linear)
         self.button_tree.clicked.connect(self.pressed_tree)
@@ -173,257 +177,282 @@ class Ui_MainWindow(object):
         self.scors1.setText(_translate("MainWindow", "TextLabel"))
         self.scorh2s.setText(_translate("MainWindow", "TextLabel"))
         self.scorso2.setText(_translate("MainWindow", "TextLabel"))
+        self.dialog.setText(_translate("MainWindow", "Mesaje"))
+
 
     def pressed_neural(self):
-        amine = float(self.amine.toPlainText())
-        sws = float(self.sws.toPlainText())
-        gn = float(self.gn.toPlainText())
-        
-        pickle_aer = open('neural_aer.pickle', 'rb')
-        bacon_aer = pickle.load(pickle_aer)
-        predictie_aer = bacon_aer.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        aer_unsc = sc_y_aer.inverse_transform(predictie_aer)
-        self.aer.setText(str(aer_unsc))
-        
-        pickle_pres = open('neural_pres.pickle', 'rb')
-        bacon_pres = pickle.load(pickle_pres)
-        predictie_pres = bacon_pres.predict(sc_y_aer.transform(np.array([aer_unsc])))
-        self.presiune.setText(str(predictie_pres))
-        
-        pickle_h2s = open('neural_h2s.pickle', 'rb')
-        bacon_h2s = pickle.load(pickle_h2s)
-        predictie_h2s = bacon_h2s.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        h2s_unsc = sc_h2s.inverse_transform(predictie_h2s)
-        self.anH2S.setText(str(h2s_unsc))
-        
-        pickle_so2 = open('neural_so2.pickle', 'rb')
-        bacon_so2 = pickle.load(pickle_so2)
-        predictie_so2 = bacon_so2.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        so2_unsc = sc_so2.inverse_transform(predictie_so2)
-        self.anSO2.setText(str(so2_unsc))
-        
-        pickle_s1 = open('neural_s1.pickle', 'rb')
-        bacon_s1 = pickle.load(pickle_s1)
-        predictie_s1 = bacon_s1.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        s1_unsc = sc_s1.inverse_transform(predictie_s1)
-        self.temps1.setText(str(s1_unsc))
-        
-        pickle_soba = open('neural_soba.pickle', 'rb')
-        bacon_soba = pickle.load(pickle_soba)
-        predictie_soba = bacon_soba.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        soba_unsc = sc_soba.inverse_transform(predictie_soba)
-        self.tempsoba.setText(str(soba_unsc))
-        
-        pickle_scor = open('li_neural.pickle', 'rb')
-        bacon_scor = pickle.load(pickle_scor)
-        a, b, c, d, e, f = bacon_scor
-        self.scoraer.setText(str(a))
-        self.scorpres.setText(str(b))
-        self.scorsoba.setText(str(c))
-        self.scors1.setText(str(d))
-        self.scorh2s.setText(str(e))
-        self.scorso2.setText(str(f))
+
+        try:
+            amine = float(self.amine.toPlainText())
+            sws = float(self.sws.toPlainText())
+            gn = float(self.gn.toPlainText())
+
+
+            pickle_aer = open('neural_aer.pickle', 'rb')
+            bacon_aer = pickle.load(pickle_aer)
+            predictie_aer = bacon_aer.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            aer_unsc = sc_y_aer.inverse_transform(predictie_aer)
+            self.aer.setText(str(aer_unsc))
+            
+            pickle_pres = open('neural_pres.pickle', 'rb')
+            bacon_pres = pickle.load(pickle_pres)
+            predictie_pres = bacon_pres.predict(sc_y_aer.transform(np.array([aer_unsc])))
+            self.presiune.setText(str(predictie_pres))
+            
+            pickle_h2s = open('neural_h2s.pickle', 'rb')
+            bacon_h2s = pickle.load(pickle_h2s)
+            predictie_h2s = bacon_h2s.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            h2s_unsc = sc_h2s.inverse_transform(predictie_h2s)
+            self.anH2S.setText(str(h2s_unsc))
+            
+            pickle_so2 = open('neural_so2.pickle', 'rb')
+            bacon_so2 = pickle.load(pickle_so2)
+            predictie_so2 = bacon_so2.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            so2_unsc = sc_so2.inverse_transform(predictie_so2)
+            self.anSO2.setText(str(so2_unsc))
+            
+            pickle_s1 = open('neural_s1.pickle', 'rb')
+            bacon_s1 = pickle.load(pickle_s1)
+            predictie_s1 = bacon_s1.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            s1_unsc = sc_s1.inverse_transform(predictie_s1)
+            self.temps1.setText(str(s1_unsc))
+            
+            pickle_soba = open('neural_soba.pickle', 'rb')
+            bacon_soba = pickle.load(pickle_soba)
+            predictie_soba = bacon_soba.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            soba_unsc = sc_soba.inverse_transform(predictie_soba)
+            self.tempsoba.setText(str(soba_unsc))
+            
+            pickle_scor = open('li_neural.pickle', 'rb')
+            bacon_scor = pickle.load(pickle_scor)
+            a, b, c, d, e, f = bacon_scor
+            self.scoraer.setText(str(a))
+            self.scorpres.setText(str(b))
+            self.scorsoba.setText(str(c))
+            self.scors1.setText(str(d))
+            self.scorh2s.setText(str(e))
+            self.scorso2.setText(str(f))
+            self.dialog.setText("Succes!")
+        except:
+            self.dialog.setText("you are not very smart, are you")
         
 
     def pressed_linear(self):
-        amine = float(self.amine.toPlainText())
-        sws = float(self.sws.toPlainText())
-        gn = float(self.gn.toPlainText())
-        
-        pickle_aer = open('linear_aer.pickle', 'rb')
-        bacon_aer = pickle.load(pickle_aer)
-        predictie_aer = bacon_aer.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        aer_unsc = sc_y_aer.inverse_transform(predictie_aer)
-        self.aer.setText(str(aer_unsc))
-        
-        pickle_pres = open('linear_pres.pickle', 'rb')
-        bacon_pres = pickle.load(pickle_pres)
-        predictie_pres = bacon_pres.predict(sc_y_aer.transform(np.array(aer_unsc)))
-        self.presiune.setText(str(predictie_pres))
-        
-        pickle_h2s = open('linear_h2s.pickle', 'rb')
-        bacon_h2s = pickle.load(pickle_h2s)
-        predictie_h2s = bacon_h2s.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        h2s_unsc = sc_h2s.inverse_transform(predictie_h2s)
-        self.anH2S.setText(str(h2s_unsc))
-        
-        pickle_so2 = open('linear_so2.pickle', 'rb')
-        bacon_so2 = pickle.load(pickle_so2)
-        predictie_so2 = bacon_so2.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        so2_unsc = sc_so2.inverse_transform(predictie_so2)
-        self.anSO2.setText(str(so2_unsc))
-        
-        pickle_s1 = open('linear_s1.pickle', 'rb')
-        bacon_s1 = pickle.load(pickle_s1)
-        predictie_s1 = bacon_s1.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        s1_unsc = sc_s1.inverse_transform(predictie_s1)
-        self.temps1.setText(str(s1_unsc))
-        
-        pickle_soba = open('linear_soba.pickle', 'rb')
-        bacon_soba = pickle.load(pickle_soba)
-        predictie_soba = bacon_soba.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        soba_unsc = sc_soba.inverse_transform(predictie_soba)
-        self.tempsoba.setText(str(soba_unsc))
-        
-        pickle_scor = open('li_linear.pickle', 'rb')
-        bacon_scor = pickle.load(pickle_scor)
-        a, b, c, d, e, f = bacon_scor
-        self.scoraer.setText(str(a))
-        self.scorpres.setText(str(b))
-        self.scorsoba.setText(str(c))
-        self.scors1.setText(str(d))
-        self.scorh2s.setText(str(e))
-        self.scorso2.setText(str(f))
+        try:
+            amine = float(self.amine.toPlainText())
+            sws = float(self.sws.toPlainText())
+            gn = float(self.gn.toPlainText())
+            
+            pickle_aer = open('linear_aer.pickle', 'rb')
+            bacon_aer = pickle.load(pickle_aer)
+            predictie_aer = bacon_aer.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            aer_unsc = sc_y_aer.inverse_transform(predictie_aer)
+            self.aer.setText(str(aer_unsc))
+            
+            pickle_pres = open('linear_pres.pickle', 'rb')
+            bacon_pres = pickle.load(pickle_pres)
+            predictie_pres = bacon_pres.predict(sc_y_aer.transform(np.array(aer_unsc)))
+            self.presiune.setText(str(predictie_pres))
+            
+            pickle_h2s = open('linear_h2s.pickle', 'rb')
+            bacon_h2s = pickle.load(pickle_h2s)
+            predictie_h2s = bacon_h2s.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            h2s_unsc = sc_h2s.inverse_transform(predictie_h2s)
+            self.anH2S.setText(str(h2s_unsc))
+            
+            pickle_so2 = open('linear_so2.pickle', 'rb')
+            bacon_so2 = pickle.load(pickle_so2)
+            predictie_so2 = bacon_so2.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            so2_unsc = sc_so2.inverse_transform(predictie_so2)
+            self.anSO2.setText(str(so2_unsc))
+            
+            pickle_s1 = open('linear_s1.pickle', 'rb')
+            bacon_s1 = pickle.load(pickle_s1)
+            predictie_s1 = bacon_s1.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            s1_unsc = sc_s1.inverse_transform(predictie_s1)
+            self.temps1.setText(str(s1_unsc))
+            
+            pickle_soba = open('linear_soba.pickle', 'rb')
+            bacon_soba = pickle.load(pickle_soba)
+            predictie_soba = bacon_soba.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            soba_unsc = sc_soba.inverse_transform(predictie_soba)
+            self.tempsoba.setText(str(soba_unsc))
+            
+            pickle_scor = open('li_linear.pickle', 'rb')
+            bacon_scor = pickle.load(pickle_scor)
+            a, b, c, d, e, f = bacon_scor
+            self.scoraer.setText(str(a))
+            self.scorpres.setText(str(b))
+            self.scorsoba.setText(str(c))
+            self.scors1.setText(str(d))
+            self.scorh2s.setText(str(e))
+            self.scorso2.setText(str(f))
+            self.dialog.setText("Succes!")
+        except:
+            self.dialog.setText("you are not very smart, are you")
 
     def pressed_tree(self):
-        amine = float(self.amine.toPlainText())
-        sws = float(self.sws.toPlainText())
-        gn = float(self.gn.toPlainText())
+        try:
+            amine = float(self.amine.toPlainText())
+            sws = float(self.sws.toPlainText())
+            gn = float(self.gn.toPlainText())
 
-        pickle_aer = open('tree_aer.pickle', 'rb')
-        bacon_aer = pickle.load(pickle_aer)
-        predictie_aer = bacon_aer.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        aer_unsc = sc_y_aer.inverse_transform(predictie_aer)
-        self.aer.setText(str(aer_unsc))
-        
-        pickle_pres = open('tree_pres.pickle', 'rb')
-        bacon_pres = pickle.load(pickle_pres)
-        predictie_pres = bacon_pres.predict(sc_y_aer.transform(np.array([aer_unsc])))
-        self.presiune.setText(str(predictie_pres))
-        
-        pickle_h2s = open('tree_h2s.pickle', 'rb')
-        bacon_h2s = pickle.load(pickle_h2s)
-        predictie_h2s = bacon_h2s.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        h2s_unsc = sc_h2s.inverse_transform(predictie_h2s)
-        self.anH2S.setText(str(h2s_unsc))
-        
-        pickle_so2 = open('tree_so2.pickle', 'rb')
-        bacon_so2 = pickle.load(pickle_so2)
-        predictie_so2 = bacon_so2.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        so2_unsc = sc_so2.inverse_transform(predictie_so2)
-        self.anSO2.setText(str(so2_unsc))
-        
-        pickle_s1 = open('tree_s1.pickle', 'rb')
-        bacon_s1 = pickle.load(pickle_s1)
-        predictie_s1 = bacon_s1.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        s1_unsc = sc_s1.inverse_transform(predictie_s1)
-        self.temps1.setText(str(s1_unsc))
-        
-        pickle_soba = open('tree_soba.pickle', 'rb')
-        bacon_soba = pickle.load(pickle_soba)
-        predictie_soba = bacon_soba.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        soba_unsc = sc_soba.inverse_transform(predictie_soba)
-        self.tempsoba.setText(str(soba_unsc))
-                
-        pickle_scor = open('li_tree.pickle', 'rb')
-        bacon_scor = pickle.load(pickle_scor)
-        a,b,c,d,e,f = bacon_scor
-        self.scoraer.setText(str(a))
-        self.scorpres.setText(str(b))
-        self.scorsoba.setText(str(c))
-        self.scors1.setText(str(d))
-        self.scorh2s.setText(str(e))
-        self.scorso2.setText(str(f))
+            pickle_aer = open('tree_aer.pickle', 'rb')
+            bacon_aer = pickle.load(pickle_aer)
+            predictie_aer = bacon_aer.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            aer_unsc = sc_y_aer.inverse_transform(predictie_aer)
+            self.aer.setText(str(aer_unsc))
+            
+            pickle_pres = open('tree_pres.pickle', 'rb')
+            bacon_pres = pickle.load(pickle_pres)
+            predictie_pres = bacon_pres.predict(sc_y_aer.transform(np.array([aer_unsc])))
+            self.presiune.setText(str(predictie_pres))
+            
+            pickle_h2s = open('tree_h2s.pickle', 'rb')
+            bacon_h2s = pickle.load(pickle_h2s)
+            predictie_h2s = bacon_h2s.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            h2s_unsc = sc_h2s.inverse_transform(predictie_h2s)
+            self.anH2S.setText(str(h2s_unsc))
+            
+            pickle_so2 = open('tree_so2.pickle', 'rb')
+            bacon_so2 = pickle.load(pickle_so2)
+            predictie_so2 = bacon_so2.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            so2_unsc = sc_so2.inverse_transform(predictie_so2)
+            self.anSO2.setText(str(so2_unsc))
+            
+            pickle_s1 = open('tree_s1.pickle', 'rb')
+            bacon_s1 = pickle.load(pickle_s1)
+            predictie_s1 = bacon_s1.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            s1_unsc = sc_s1.inverse_transform(predictie_s1)
+            self.temps1.setText(str(s1_unsc))
+            
+            pickle_soba = open('tree_soba.pickle', 'rb')
+            bacon_soba = pickle.load(pickle_soba)
+            predictie_soba = bacon_soba.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            soba_unsc = sc_soba.inverse_transform(predictie_soba)
+            self.tempsoba.setText(str(soba_unsc))
+                    
+            pickle_scor = open('li_tree.pickle', 'rb')
+            bacon_scor = pickle.load(pickle_scor)
+            a,b,c,d,e,f = bacon_scor
+            self.scoraer.setText(str(a))
+            self.scorpres.setText(str(b))
+            self.scorsoba.setText(str(c))
+            self.scors1.setText(str(d))
+            self.scorh2s.setText(str(e))
+            self.scorso2.setText(str(f))
+            self.dialog.setText("Succes!")
+        except:
+            self.dialog.setText("you are not very smart, are you")
     
     def pressed_forest(self):
-        amine = float(self.amine.toPlainText())
-        sws = float(self.sws.toPlainText())
-        gn = float(self.gn.toPlainText())
-        
-        pickle_aer = open('forest_aer.pickle', 'rb')
-        bacon_aer = pickle.load(pickle_aer)
-        predictie_aer = bacon_aer.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        aer_unsc = sc_y_aer.inverse_transform(predictie_aer)
-        self.aer.setText(str(aer_unsc))
-        
-        pickle_pres = open('forest_pres.pickle', 'rb')
-        bacon_pres = pickle.load(pickle_pres)
-        predictie_pres = bacon_pres.predict(sc_y_aer.transform(np.array([aer_unsc])))
-        self.presiune.setText(str(predictie_pres))
-        
-        pickle_h2s = open('forest_h2s.pickle', 'rb')
-        bacon_h2s = pickle.load(pickle_h2s)
-        predictie_h2s = bacon_h2s.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        h2s_unsc = sc_h2s.inverse_transform(predictie_h2s)
-        self.anH2S.setText(str(h2s_unsc))
-        
-        pickle_so2 = open('forest_so2.pickle', 'rb')
-        bacon_so2 = pickle.load(pickle_so2)
-        predictie_so2 = bacon_so2.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        so2_unsc = sc_so2.inverse_transform(predictie_so2)
-        self.anSO2.setText(str(so2_unsc))
-        
-        pickle_s1 = open('forest_s1.pickle', 'rb')
-        bacon_s1 = pickle.load(pickle_s1)
-        predictie_s1 = bacon_s1.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        s1_unsc = sc_s1.inverse_transform(predictie_s1)
-        self.temps1.setText(str(s1_unsc))
-        
-        pickle_soba = open('forest_soba.pickle', 'rb')
-        bacon_soba = pickle.load(pickle_soba)
-        predictie_soba = bacon_soba.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        soba_unsc = sc_soba.inverse_transform(predictie_soba)
-        self.tempsoba.setText(str(soba_unsc))
-                
-        pickle_scor = open('li_forest.pickle', 'rb')
-        bacon_scor = pickle.load(pickle_scor)
-        a,b,c,d,e,f = bacon_scor
-        self.scoraer.setText(str(a))
-        self.scorpres.setText(str(b))
-        self.scorsoba.setText(str(c))
-        self.scors1.setText(str(d))
-        self.scorh2s.setText(str(e))
-        self.scorso2.setText(str(f))
+        try:
+
+            amine = float(self.amine.toPlainText())
+            sws = float(self.sws.toPlainText())
+            gn = float(self.gn.toPlainText())
+            
+            pickle_aer = open('forest_aer.pickle', 'rb')
+            bacon_aer = pickle.load(pickle_aer)
+            predictie_aer = bacon_aer.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            aer_unsc = sc_y_aer.inverse_transform(predictie_aer)
+            self.aer.setText(str(aer_unsc))
+            
+            pickle_pres = open('forest_pres.pickle', 'rb')
+            bacon_pres = pickle.load(pickle_pres)
+            predictie_pres = bacon_pres.predict(sc_y_aer.transform(np.array([aer_unsc])))
+            self.presiune.setText(str(predictie_pres))
+            
+            pickle_h2s = open('forest_h2s.pickle', 'rb')
+            bacon_h2s = pickle.load(pickle_h2s)
+            predictie_h2s = bacon_h2s.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            h2s_unsc = sc_h2s.inverse_transform(predictie_h2s)
+            self.anH2S.setText(str(h2s_unsc))
+            
+            pickle_so2 = open('forest_so2.pickle', 'rb')
+            bacon_so2 = pickle.load(pickle_so2)
+            predictie_so2 = bacon_so2.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            so2_unsc = sc_so2.inverse_transform(predictie_so2)
+            self.anSO2.setText(str(so2_unsc))
+            
+            pickle_s1 = open('forest_s1.pickle', 'rb')
+            bacon_s1 = pickle.load(pickle_s1)
+            predictie_s1 = bacon_s1.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            s1_unsc = sc_s1.inverse_transform(predictie_s1)
+            self.temps1.setText(str(s1_unsc))
+            
+            pickle_soba = open('forest_soba.pickle', 'rb')
+            bacon_soba = pickle.load(pickle_soba)
+            predictie_soba = bacon_soba.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            soba_unsc = sc_soba.inverse_transform(predictie_soba)
+            self.tempsoba.setText(str(soba_unsc))
+                    
+            pickle_scor = open('li_forest.pickle', 'rb')
+            bacon_scor = pickle.load(pickle_scor)
+            a,b,c,d,e,f = bacon_scor
+            self.scoraer.setText(str(a))
+            self.scorpres.setText(str(b))
+            self.scorsoba.setText(str(c))
+            self.scors1.setText(str(d))
+            self.scorh2s.setText(str(e))
+            self.scorso2.setText(str(f))
+            self.dialog.setText("Succes!")
+        except:
+            self.dialog.setText("you are not very smart, are you")
     
     def pressed_svr(self):
-        amine = float(self.amine.toPlainText())
-        sws = float(self.sws.toPlainText())
-        gn = float(self.gn.toPlainText())
-        
-        pickle_aer = open('svr_aer.pickle', 'rb')
-        bacon_aer = pickle.load(pickle_aer)
-        predictie_aer = bacon_aer.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        aer_unsc = sc_y_aer.inverse_transform(predictie_aer)
-        self.aer.setText(str(aer_unsc))
-        
-        pickle_pres = open('svr_pres.pickle', 'rb')
-        bacon_pres = pickle.load(pickle_pres)
-        predictie_pres = bacon_pres.predict(sc_y_aer.transform(np.array([aer_unsc])))
-        self.presiune.setText(str(predictie_pres))
-        
-        pickle_h2s = open('svr_h2s.pickle', 'rb')
-        bacon_h2s = pickle.load(pickle_h2s)
-        predictie_h2s = bacon_h2s.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        h2s_unsc = sc_h2s.inverse_transform(predictie_h2s)
-        self.anH2S.setText(str(h2s_unsc))
-        
-        pickle_so2 = open('svr_so2.pickle', 'rb')
-        bacon_so2 = pickle.load(pickle_so2)
-        predictie_so2 = bacon_so2.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        so2_unsc = sc_so2.inverse_transform(predictie_so2)
-        self.anSO2.setText(str(so2_unsc))
-        
-        pickle_s1 = open('svr_s1.pickle', 'rb')
-        bacon_s1 = pickle.load(pickle_s1)
-        predictie_s1 = bacon_s1.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        s1_unsc = sc_s1.inverse_transform(predictie_s1)
-        self.temps1.setText(str(s1_unsc))
-        
-        pickle_soba = open('svr_soba.pickle', 'rb')
-        bacon_soba = pickle.load(pickle_soba)
-        predictie_soba = bacon_soba.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
-        soba_unsc = sc_soba.inverse_transform(predictie_soba)
-        self.tempsoba.setText(str(soba_unsc))
-                
-        pickle_scor = open('li_svr.pickle', 'rb')
-        bacon_scor = pickle.load(pickle_scor)
-        a,b,c,d,e,f = bacon_scor
-        self.scoraer.setText(str(a))
-        self.scorpres.setText(str(b))
-        self.scorsoba.setText(str(c))
-        self.scors1.setText(str(d))
-        self.scorh2s.setText(str(e))
-        self.scorso2.setText(str(f))
+        try:
+            amine = float(self.amine.toPlainText())
+            sws = float(self.sws.toPlainText())
+            gn = float(self.gn.toPlainText())
+            
+            pickle_aer = open('svr_aer.pickle', 'rb')
+            bacon_aer = pickle.load(pickle_aer)
+            predictie_aer = bacon_aer.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            aer_unsc = sc_y_aer.inverse_transform(predictie_aer)
+            self.aer.setText(str(aer_unsc))
+            
+            pickle_pres = open('svr_pres.pickle', 'rb')
+            bacon_pres = pickle.load(pickle_pres)
+            predictie_pres = bacon_pres.predict(sc_y_aer.transform(np.array([aer_unsc])))
+            self.presiune.setText(str(predictie_pres))
+            
+            pickle_h2s = open('svr_h2s.pickle', 'rb')
+            bacon_h2s = pickle.load(pickle_h2s)
+            predictie_h2s = bacon_h2s.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            h2s_unsc = sc_h2s.inverse_transform(predictie_h2s)
+            self.anH2S.setText(str(h2s_unsc))
+            
+            pickle_so2 = open('svr_so2.pickle', 'rb')
+            bacon_so2 = pickle.load(pickle_so2)
+            predictie_so2 = bacon_so2.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            so2_unsc = sc_so2.inverse_transform(predictie_so2)
+            self.anSO2.setText(str(so2_unsc))
+            
+            pickle_s1 = open('svr_s1.pickle', 'rb')
+            bacon_s1 = pickle.load(pickle_s1)
+            predictie_s1 = bacon_s1.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            s1_unsc = sc_s1.inverse_transform(predictie_s1)
+            self.temps1.setText(str(s1_unsc))
+            
+            pickle_soba = open('svr_soba.pickle', 'rb')
+            bacon_soba = pickle.load(pickle_soba)
+            predictie_soba = bacon_soba.predict(sc_x_aer.transform(np.array([amine, sws, gn]).reshape(1, 3)))
+            soba_unsc = sc_soba.inverse_transform(predictie_soba)
+            self.tempsoba.setText(str(soba_unsc))
+                    
+            pickle_scor = open('li_svr.pickle', 'rb')
+            bacon_scor = pickle.load(pickle_scor)
+            a,b,c,d,e,f = bacon_scor
+            self.scoraer.setText(str(a))
+            self.scorpres.setText(str(b))
+            self.scorsoba.setText(str(c))
+            self.scors1.setText(str(d))
+            self.scorh2s.setText(str(e))
+            self.scorso2.setText(str(f))
+            self.dialog.setText("Succes!")
+        except:
+            self.dialog.setText("you are not very smart, are you")
         
     def pressed_poly(self):
         self.aer.setText("not implemented")
@@ -438,6 +467,7 @@ class Ui_MainWindow(object):
         self.scors1.setText('NaN')
         self.scorh2s.setText('NaN')
         self.scorso2.setText('NaN')
+        self.dialog.setText("this feature is not working right now")
 
 
 if __name__ == "__main__":
